@@ -1,0 +1,4 @@
+-e git+https://github.com/Runnerly/flakon.git#egg=flakon
+-e git+https://github.com/facebookresearch/fastText#egg=fasttext
+flask_webtest
+sphinx

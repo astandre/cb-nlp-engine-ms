@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/.tox/docs/src/fasttext" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.tox/docs/src/flakon" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.tox/py37/src/fasttext" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.tox/py37/src/flakon" vcs="Git" />
+  </component>
+</project>
