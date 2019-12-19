@@ -10,8 +10,11 @@ class NLPEngine:
     """
 
     def __init__(self):
-        self.intents_model = fasttext.load_model("./models/opencampus_intents.ftz")
-        self.entities_model = fasttext.load_model("./models/opencampus_entities.ftz")
+        try:
+            self.intents_model = fasttext.load_model("./models/opencampus_intents.ftz")
+            self.entities_model = fasttext.load_model("./models/opencampus_entities.ftz")
+        except Exception:
+            print("Error")
 
     @staticmethod
     def clean_sentence(sentence):
