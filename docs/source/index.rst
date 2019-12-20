@@ -2,11 +2,13 @@ NLPENGINE
 =========
 
 
-**nlpengine** is a simple JSON Flask application that uses **Flakon**.
+This project is part of the architecture described in:
+Herrera, Andre & Yaguachi, Lady & Piedra, Nelson. (2019). Building Conversational Interface for Customer Support Applied to Open Campus an Open Online Course Provider. 11-13. 10.1109/ICALT.2019.00011.
+
 
 The application is created with :func:`flakon.create_app`:
 
-.. literalinclude:: ../../nlpengine/app.py
+.. literalinclude:: ../../kbsbot/nlpengine/app.py
 
 
 The :file:`settings.ini` file which is passed to :func:`create_app`

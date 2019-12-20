@@ -4,3 +4,4 @@ Flask
 sphinx-rtd-theme==0.4.3
 WebTest==2.0.33
 Werkzeug==0.16.0
+Flask-SQLAlchemy
