@@ -8,11 +8,27 @@ nlp = JsonBlueprint('nlp', __name__)
 
 @nlp.route('/entities', methods=['POST'])
 def get_entities():
-    """Extract entities
+    """
 
-    This view will extract all entities using entity models associated with agent.
-    This models must be trained with fasttext.
-    @param: agent: agent name
+    This view will extract all entities using models associated with agent.
+
+    Args:
+        @param: agent:  A valid agent name.
+
+        @param: sentence:  Sentence where information will be extracted.
+
+        @param: k:  Number of predictions to be extracted.
+
+    Returns:
+        Entities found in sentence from different models
+
+    Raises:
+      ModelNotFoundException: If model not found
+
+      AgentNotFoundException: If agent not found
+
+      KeyError: If no correct keys in json request
+
     """
     if request.method == 'POST':
         data = request.get_json()
@@ -33,7 +49,7 @@ def get_entities():
                     k = data["k"]
                 result["entities"] += engine.extract_information(data["sentence"], name=model.entity_name.upper(), k=k,
                                                                  model_type=ModelType.entities)["entities"]
-            print(result)
+            # print(result)
             return result
         except KeyError:
             return {'message': 'Must provide a valid agent name', 'status': 404}
@@ -48,10 +64,26 @@ def get_entities():
 
 @nlp.route('/intents', methods=['POST'])
 def get_intents():
-    """Extract intents
+    """
 
-    This view will extract all entities using trained fasttext model for courses
-    @param
+    This view will extract intents using a trained model with fasttext.
+
+    Args:
+        @param: agent:  A valid agent name.
+
+        @param: sentence:  Sentence where information will be extracted.
+
+        @param: k:  Number of predictions to be extracted.
+
+    Returns:
+        Entities found in sentence from different models
+
+    Raises:
+      ModelNotFoundException: If model not found
+
+      AgentNotFoundException: If agent not found
+
+      KeyError: If no correct keys in json request
     """
     if request.method == 'POST':
         data = request.get_json()

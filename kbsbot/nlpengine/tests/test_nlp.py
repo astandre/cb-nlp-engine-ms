@@ -1,5 +1,11 @@
 import unittest
 import pytest
+from kbsbot.nlpengine.database import *
+from kbsbot.nlpengine.nlp_main import *
+
+from unittest import TestCase
+from flask_webtest import TestApp
+import json
 
 
 # content of test_class.py
@@ -8,16 +14,14 @@ class TestClass:
         x = "this"
         assert "h" in x
 
-    # def test_two(self):
-    #     x = "hello"
-    #     assert hasattr(x, "check")
-# class NLPEngineAppTest(unittest.TestCase):
 
+class NLPTest(TestCase):
 
-# def test_get_intents(self):
-#     engine = NLPEngine()
-#     data = engine.extract_intents("QUe cursos hay?", 1)
-#     self.assertEqual(data, {
-#         "prediction": "__label__listarCursos",
-#         "probability": 0.9001758098602295
-#     })
+    def setUp(self):
+        self.engine = NLPEngine("opencampus_intents.ftz")
+
+    def test_intents(self):
+        result = self.engine.extract_information(sentence="Que cursos hay", model_type=ModelType.intent)
+        print(result)
+
+        assert "intent" in result

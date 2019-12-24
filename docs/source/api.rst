@@ -2,6 +2,8 @@ APIS
 ====
 
 
-**NLPENGINE** includes one view that's linked to the root path:
+Here we have the different views of the app.
 
 .. autofunction:: views.nlp.get_intents
+
+.. autofunction:: views.nlp.get_entities

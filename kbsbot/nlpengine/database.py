@@ -68,7 +68,7 @@ def init_database():
     exists = Agent.query.all()
     if exists is None or len(exists) == 0:
         agent = Agent(name='opencampuscursos')
-        intent_model = Model(name='opencampus_cursos.ftz', url='asdasd', model_type=ModelType.intent, agent=agent)
+        intent_model = Model(name='opencampus_intents.ftz', url='asdasd', model_type=ModelType.intent, agent=agent)
         cursos_model = Model(name='opencampus_cursos.ftz', url='asdasd', model_type=ModelType.entities,
                              entity_name="CURSOS",
                              agent=agent)

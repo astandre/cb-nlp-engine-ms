@@ -18,6 +18,7 @@ Check also th API description here:
    :maxdepth: 2
 
    api
+   nlp_main
 
 Check also the TODO lis for this project:
 
