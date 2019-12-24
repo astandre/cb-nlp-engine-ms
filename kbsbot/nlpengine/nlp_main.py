@@ -1,6 +1,7 @@
 import fasttext
 import unicodedata
 import re
+from .database import ModelType
 
 
 class NLPEngine:
@@ -12,10 +13,9 @@ class NLPEngine:
     def __init__(self, model_url):
         try:
             self.model_url = "./nlp_models/" + model_url
-            print(model_url)
+            # print(model_url)
             self.model = fasttext.load_model(self.model_url)
-            # self.entities_model = fasttext.load_model("nlp_models/opencampus_cursos.ftz")
-        except Exception as  e:
+        except Exception as e:
             print(e)
             print("Error")
 
@@ -29,12 +29,19 @@ class NLPEngine:
         sentence = (re.sub(r"[^a-zA-Z0-9]+", ' ', sentence))
         return sentence
 
-    def extract_information(self, sentence, k=1):
+    def extract_information(self, sentence, name=None, k=1, model_type=ModelType.intent):
         results = self.model.predict(self.clean_sentence(sentence), k=k)
         final = []
         for label, prob in zip(results[0], results[1]):
-            final.append({"prediction": label, "probability": prob})
-        return {"labels": final}
+            if name is not None:
+                final.append(
+                    {"prediction": label, "label": label.replace("__label__", ""), "probability": prob, "entity": name})
+            else:
+                final.append({"prediction": label, "label": label.replace("__label__", ""), "probability": prob})
+        if model_type == ModelType.intent:
+            return {"intent": final}
+        elif model_type == ModelType.entities:
+            return {"entities": final}
 
 
 class AgentNotFoundException(Exception):
@@ -45,9 +52,4 @@ class AgentNotFoundException(Exception):
 class ModelNotFoundException(Exception):
     def __init__(self):
         Exception.__init__(self, "No models found related to agent")
-#
-# def extract_entities(self, sentence, k=1):
-#     return self.extract_information(sentence, self.entities_model, k)
-#
-# def extract_intents(self, sentence, k=1):
-#     return self.extract_information(sentence, self.intents_model, k)
+
