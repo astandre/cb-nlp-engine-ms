@@ -25,7 +25,10 @@ class NLPEngine:
         except Exception as e:
             print(e)
             print("Error")
-            print("Models must be installed")
+            path = os.path.dirname(__file__) + "/nlp_models"
+            if not os.path.exists(path):
+                os.makedirs(path)
+                print("Models must be installed")
 
     @staticmethod
     def clean_sentence(sentence):
