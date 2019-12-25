@@ -25,6 +25,7 @@ class NLPEngine:
         except Exception as e:
             print(e)
             print("Error")
+            print("Models must be installed")
 
     @staticmethod
     def clean_sentence(sentence):
