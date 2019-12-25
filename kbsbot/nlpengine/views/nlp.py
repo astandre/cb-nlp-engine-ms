@@ -50,6 +50,7 @@ def get_entities():
                 result["entities"] += engine.extract_information(data["sentence"], name=model.entity_name.upper(), k=k,
                                                                  model_type=ModelType.entities)["entities"]
             # print(result)
+            result["status"] = 200
             return result
         except KeyError:
             return {'message': 'Must provide a valid agent name', 'status': 404}
@@ -102,6 +103,7 @@ def get_intents():
                 k = data["k"]
             result = engine.extract_information(data["sentence"], k=k, model_type=ModelType.intent)
             # print(result)
+            result["status"] = 200
             return result
         except KeyError:
             return {'message': 'Must provide a valid agent name', 'status': 404}
