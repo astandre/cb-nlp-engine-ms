@@ -70,7 +70,7 @@ def init_database():
         agent = Agent(name='opencampuscursos')
         intent_model = Model(name='opencampus_intents.ftz', url='asdasd', model_type=ModelType.intent, agent=agent)
         cursos_model = Model(name='opencampus_cursos.ftz', url='asdasd', model_type=ModelType.entities,
-                             entity_name="CURSOS",
+                             entity_name="Course",
                              agent=agent)
 
         db.session.add(agent)
