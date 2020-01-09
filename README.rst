@@ -16,5 +16,15 @@ Herrera, Andre & Yaguachi, Lady & Piedra, Nelson. (2019). Building Conversationa
     :alt: Documentation Status
 
 
+Running scripts
+
+
+``docker build -t kbsbot/nlp_engine . -f docker/Dockerfile``
+
+
+``docker run --rm  --name=nlp_engine -p 5001:8000 -it kbsbot/nlp_engine``
+
+
+
 
 

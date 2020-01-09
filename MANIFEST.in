@@ -3,3 +3,4 @@ include README.rst
 recursive-include nlpengine *.ini
 recursive-include docs *.rst *.png *.svg *.css *.html conf.py
 prune docs/build/*
+graft kbsbot/nlpengine/nlp_models/

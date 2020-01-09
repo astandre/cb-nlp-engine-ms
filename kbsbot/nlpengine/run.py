@@ -1,7 +1,8 @@
 from kbsbot.nlpengine.app import create_app
-from kbsbot.nlpengine.database import db,  init_database
+from kbsbot.nlpengine.database import db, init_database
 import sys
 import signal
+import os
 
 
 def _quit(signal, frame):
@@ -29,3 +30,11 @@ def main():
 
 if __name__ == "__main__":
     main()
+else:
+    _HERE = os.path.dirname(__file__)
+    _SETTINGS = os.path.join(_HERE, 'settings.ini')
+    app = create_app(settings=_SETTINGS)
+    db.init_app(app)
+    db.app = app
+    db.create_all(app=app)
+    init_database()
