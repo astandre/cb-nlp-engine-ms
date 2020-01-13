@@ -47,7 +47,7 @@ def get_entities():
                 k = 1
                 if "k" in data:
                     k = data["k"]
-                result["entities"] += engine.extract_information(data["sentence"], name=model.entity_name.upper(), k=k,
+                result["entities"] += engine.extract_information(data["sentence"], name=model.entity_name, k=k,
                                                                  model_type=ModelType.entities)["entities"]
             # print(result)
             result["status"] = 200

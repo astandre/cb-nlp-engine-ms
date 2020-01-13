@@ -69,9 +69,11 @@ class NLPEngine:
         for label, prob in zip(results[0], results[1]):
             if name is not None:
                 final.append(
-                    {"prediction": label, "label": label.replace("__label__", ""), "probability": prob, "entity": name})
+                    {"prediction": label, "label": label.replace("__label__", "http://127.0.0.1/ockb/resources/"),
+                     "probability": prob, "entity": name})
             else:
-                final.append({"prediction": label, "label": label.replace("__label__", ""), "probability": prob})
+                final.append({"prediction": label, "label": label.replace("http://127.0.0.1/ockb/resources/", ""),
+                              "probability": prob})
         if model_type == ModelType.intent:
             return {"intent": final}
         elif model_type == ModelType.entities:

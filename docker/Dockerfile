@@ -2,7 +2,7 @@ FROM python:3.7
 
 RUN pip install gunicorn
 
-COPY docker/settings.ini /app/settings.ini
+COPY docker/settings.ini /app/kbsbot/nlpengine/settings.ini
 
 COPY . /app
 
