@@ -6,7 +6,7 @@ from kbsbot.nlpengine.nlp_main import *
 nlp = JsonBlueprint('nlp', __name__)
 
 
-@nlp.route('/entities', methods=['POST'])
+@nlp.route('/entities', methods=['GET'])
 def get_entities():
     """
 
@@ -30,40 +30,39 @@ def get_entities():
       KeyError: If no correct keys in json request
 
     """
-    if request.method == 'POST':
-        data = request.get_json()
-        try:
-            agent = Agent.query.filter_by(name=data["agent"].lower()).first()
-            # print(agent)
-            if agent is None:
-                raise AgentNotFoundException()
-            entities_model = Model.query.filter_by(agent=agent, model_type=ModelType.entities).all()
-            if entities_model is None or len(entities_model) == 0:
-                raise ModelNotFoundException()
-            result = {"entities": []}
-            for model in entities_model:
-                # print(model.name)
-                engine = NLPEngine(model.name)
-                k = 1
-                if "k" in data:
-                    k = data["k"]
-                result["entities"] += engine.extract_information(data["sentence"], name=model.entity_name, k=k,
-                                                                 model_type=ModelType.entities)["entities"]
-            # print(result)
-            result["status"] = 200
-            return result
-        except KeyError:
-            return {'message': 'Must provide a valid agent name', 'status': 404}
-        except AgentNotFoundException as e:
-            return {'message': e.__str__(), 'status': 404}
-        except ModelNotFoundException as e:
-            return {'message': e.__str__(), 'status': 400}
-    else:
-        return {'message': 'method not allowed here',
-                'status': 405}
+
+    data = request.get_json()
+    try:
+        agent = Agent.query.filter_by(name=data["agent"].lower()).first()
+        # print(agent)
+        if agent is None:
+            raise AgentNotFoundException()
+        entities_model = Model.query.filter_by(agent=agent, model_type=ModelType.entities).all()
+        if entities_model is None or len(entities_model) == 0:
+            raise ModelNotFoundException()
+        result = {"entities": []}
+        for model in entities_model:
+            # print(model.name)
+            engine = NLPEngine(model.name)
+            k = 1
+            if "k" in data:
+                k = data["k"]
+            result["entities"] += \
+                engine.extract_information(data["sentence"], model.threshold, name=model.entity_name, k=k,
+                                           model_type=ModelType.entities)["entities"]
+        # print(result)
+        result["status"] = 200
+
+        return result
+    except KeyError:
+        return {'message': 'Must provide a valid agent name', 'status': 404}
+    except AgentNotFoundException as e:
+        return {'message': e.__str__(), 'status': 404}
+    except ModelNotFoundException as e:
+        return {'message': e.__str__(), 'status': 400}
 
 
-@nlp.route('/intents', methods=['POST'])
+@nlp.route('/intents', methods=['GET'])
 def get_intents():
     """
 
@@ -86,31 +85,28 @@ def get_intents():
 
       KeyError: If no correct keys in json request
     """
-    if request.method == 'POST':
-        data = request.get_json()
-        try:
-            agent = Agent.query.filter_by(name=data["agent"].lower()).first()
-            # print(agent)
-            if agent is None:
-                raise AgentNotFoundException()
-            model = Model.query.filter_by(agent=agent, model_type=ModelType.intent).first()
-            if model is None:
-                raise ModelNotFoundException()
-            # print(model.name)
-            engine = NLPEngine(model.name)
-            k = 1
-            if "k" in data:
-                k = data["k"]
-            result = engine.extract_information(data["sentence"], k=k, model_type=ModelType.intent)
-            # print(result)
-            result["status"] = 200
-            return result
-        except KeyError:
-            return {'message': 'Must provide a valid agent name', 'status': 404}
-        except AgentNotFoundException as e:
-            return {'message': e.__str__(), 'status': 404}
-        except ModelNotFoundException as e:
-            return {'message': e.__str__(), 'status': 400}
-    else:
-        return {'message': 'method not allowed here',
-                'status': 405}
+
+    data = request.get_json()
+    try:
+        agent = Agent.query.filter_by(name=data["agent"].lower()).first()
+        # print(agent)
+        if agent is None:
+            raise AgentNotFoundException()
+        model = Model.query.filter_by(agent=agent, model_type=ModelType.intent).first()
+        if model is None:
+            raise ModelNotFoundException()
+        # print(model.name)
+        engine = NLPEngine(model.name)
+        k = 1
+        if "k" in data:
+            k = data["k"]
+        result = engine.extract_information(data["sentence"], model.threshold, k=k, model_type=ModelType.intent)
+        # print(result)
+        result["status"] = 200
+        return result
+    except KeyError:
+        return {'message': 'Must provide a valid agent name', 'status': 404}
+    except AgentNotFoundException as e:
+        return {'message': e.__str__(), 'status': 404}
+    except ModelNotFoundException as e:
+        return {'message': e.__str__(), 'status': 400}

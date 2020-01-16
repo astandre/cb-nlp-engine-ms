@@ -49,7 +49,7 @@ class NLPEngine:
         sentence = (re.sub(r"[^a-zA-Z0-9]+", ' ', sentence))
         return sentence
 
-    def extract_information(self, sentence, name=None, k=1, model_type=ModelType.intent):
+    def extract_information(self, sentence, threshold=0.0, name=None, k=1, model_type=ModelType.intent):
         """
         This method extracts information depending of the model type
         Args:
@@ -64,16 +64,17 @@ class NLPEngine:
         Returns:
             A dict containing information found in sentence
         """
-        results = self.model.predict(self.clean_sentence(sentence), k=k)
+        results = self.model.predict(self.clean_sentence(sentence), k=k, threshold=threshold)
         final = []
         for label, prob in zip(results[0], results[1]):
             if name is not None:
                 final.append(
-                    {"prediction": label, "label": label.replace("__label__", "http://127.0.0.1/ockb/resources/"),
+                    {"prediction": label.replace("__label__", "http://127.0.0.1/ockb/resources/"), "label": label,
                      "probability": prob, "entity": name})
             else:
-                final.append({"prediction": label, "label": label.replace("http://127.0.0.1/ockb/resources/", ""),
-                              "probability": prob})
+                final.append(
+                    {"prediction": label.replace("__label__", "http://127.0.0.1/ockb/resources/"), "label": label,
+                     "probability": prob})
         if model_type == ModelType.intent:
             return {"intent": final}
         elif model_type == ModelType.entities:

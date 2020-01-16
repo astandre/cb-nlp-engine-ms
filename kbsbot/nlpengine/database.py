@@ -55,6 +55,7 @@ class Model(db.Model):
     )
     agent_id = db.Column(db.Integer, db.ForeignKey('agent.id'),
                          nullable=False)
+    threshold = db.Column(db.Float, nullable=False, default=0.0)
     agent = db.relationship('Agent', backref=db.backref('models', lazy=True))
 
     def __repr__(self):
@@ -68,10 +69,11 @@ def init_database():
     exists = Agent.query.all()
     if exists is None or len(exists) == 0:
         agent = Agent(name='opencampuscursos')
-        intent_model = Model(name='opencampus_intents.ftz', url='asdasd', model_type=ModelType.intent, agent=agent)
+        intent_model = Model(name='opencampus_intents.ftz', url='asdasd', model_type=ModelType.intent, agent=agent,
+                             threshold=0.2)
         cursos_model = Model(name='opencampus_cursos.ftz', url='asdasd', model_type=ModelType.entities,
                              entity_name="http://127.0.0.1/ockb/resources/Course",
-                             agent=agent)
+                             agent=agent, threshold=0.2)
 
         db.session.add(agent)
         db.session.add(intent_model)
