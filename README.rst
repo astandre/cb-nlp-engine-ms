@@ -22,7 +22,7 @@ Running scripts
 ``docker build -t astandre/kbsbot_nlp_engine . -f docker/Dockerfile``
 
 
-``docker run --rm  --name=nlp_engine -p 5001:8000 -it astandre/kbsbot_nlp_engine``
+``docker run --rm  --name=nlp_engine -p 5001:8001 -it astandre/kbsbot_nlp_engine``
 
 
 

@@ -33,6 +33,7 @@ if __name__ == "__main__":
 else:
     _HERE = os.path.dirname(__file__)
     _SETTINGS = os.path.join(_HERE, 'settings.ini')
+    print("gute reise")
     app = create_app(settings=_SETTINGS)
     db.init_app(app)
     db.app = app
