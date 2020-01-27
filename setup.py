@@ -1,11 +1,5 @@
-import sys
 from setuptools import setup, find_packages
 from kbsbot.nlpengine import __version__
-
-with open('requirements.txt') as f:
-    deps = [dep for dep in f.read().split('\n') if dep.strip() != ''
-            and not dep.startswith('-e')]
-    install_requires = deps
 
 setup(name='nlp_engine',
       description="This microservice is  intended to extract structured information from raw text, to identify intents and entities for KBS bot.",
