@@ -23,8 +23,3 @@ Running scripts
 
 
 ``docker run --rm  --name=nlpengine -p 5001:8001 -it astandre/kbsbot_nlpengine``
-
-
-
-
-
