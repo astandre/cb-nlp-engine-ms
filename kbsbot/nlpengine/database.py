@@ -68,7 +68,7 @@ def init_database():
     """
     exists = Agent.query.all()
     if exists is None or len(exists) == 0:
-        agent = Agent(name='opencampuscursos')
+        agent = Agent(name='OpenCampus')
         intent_model = Model(name='opencampus_intents.ftz',
                              url='https://drive.google.com/file/d/1ASfQkukvCVgbtoR0QI1fUEU36bG8nCgC/view?usp=sharing',
                              model_type=ModelType.intent, agent=agent,

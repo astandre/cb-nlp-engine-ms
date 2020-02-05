@@ -1,9 +1,9 @@
 from kbsbot.nlpengine.nlp_main import *
 from unittest import TestCase
-from kbsbot.nlpengine.app import create_app
 from kbsbot.nlpengine.database import *
 from unittest.mock import MagicMock
-import json
+# from kbsbot.nlpengine.app import create_app
+# import json
 
 
 class NLPTest(TestCase):
