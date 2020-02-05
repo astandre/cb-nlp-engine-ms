@@ -33,7 +33,7 @@ def get_entities():
 
     data = request.get_json()
     try:
-        agent = Agent.query.filter_by(name=data["agent"].lower()).first()
+        agent = Agent.query.filter_by(name=data["agent"]).first()
         # print(agent)
         if agent is None:
             raise AgentNotFoundException()
@@ -88,7 +88,7 @@ def get_intents():
 
     data = request.get_json()
     try:
-        agent = Agent.query.filter_by(name=data["agent"].lower()).first()
+        agent = Agent.query.filter_by(name=data["agent"]).first()
         # print(agent)
         if agent is None:
             raise AgentNotFoundException()
