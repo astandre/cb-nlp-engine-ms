@@ -6,7 +6,7 @@ from kbsbot.nlpengine.nlp_main import *
 nlp = JsonBlueprint('nlp', __name__)
 
 
-@nlp.route('/entities', methods=['GET'])
+@nlp.route('/entities', methods=['POST'])
 def get_entities():
     """
 
@@ -62,7 +62,7 @@ def get_entities():
         return {'message': e.__str__(), 'status': 400}
 
 
-@nlp.route('/intents', methods=['GET'])
+@nlp.route('/intents', methods=['POST'])
 def get_intents():
     """
 
