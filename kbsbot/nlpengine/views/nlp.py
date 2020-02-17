@@ -2,8 +2,19 @@ from flakon import JsonBlueprint
 from flask import request
 from kbsbot.nlpengine.database import Model, ModelType, Agent
 from kbsbot.nlpengine.nlp_main import *
+import logging
 
 nlp = JsonBlueprint('nlp', __name__)
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
+
+
+@nlp.route('/status', methods=["GET"])
+def get_status():
+    return {"message": "ok"}
 
 
 @nlp.route('/entities', methods=['POST'])
@@ -32,6 +43,7 @@ def get_entities():
     """
 
     data = request.get_json()
+    logger.info(">>>>> Incoming data  %s", data)
     try:
         agent = Agent.query.filter_by(name=data["agent"]).first()
         # print(agent)
@@ -52,7 +64,7 @@ def get_entities():
                                            model_type=ModelType.entities)["entities"]
         # print(result)
         result["status"] = 200
-
+        logger.info("<<<<< Output  %s", result)
         return result
     except KeyError:
         return {'message': 'Must provide a valid agent name', 'status': 404}
@@ -87,6 +99,7 @@ def get_intents():
     """
 
     data = request.get_json()
+    logger.info(">>>>> Incoming data  %s", data)
     try:
         agent = Agent.query.filter_by(name=data["agent"]).first()
         # print(agent)
@@ -103,6 +116,7 @@ def get_intents():
         result = engine.extract_information(data["sentence"], model.threshold, k=k, model_type=ModelType.intent)
         # print(result)
         result["status"] = 200
+        logger.info("<<<<< Output  %s", result)
         return result
     except KeyError:
         return {'message': 'Must provide a valid agent name', 'status': 404}
