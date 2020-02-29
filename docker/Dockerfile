@@ -13,7 +13,7 @@ RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=down
 RUN pip install -r /app/requirements.txt
 RUN pip install /app/
 
-CMD ["python", "-m", "spacy", "download", "es_core_news_sm"]
+#CMD ["python", "-m", "spacy", "download", "es_core_news_sm"]
 
 WORKDIR /app/kbsbot/nlpengine
 
