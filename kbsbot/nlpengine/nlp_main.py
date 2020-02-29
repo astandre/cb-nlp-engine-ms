@@ -3,6 +3,9 @@ import unicodedata
 import re
 from .database import ModelType
 import os
+import spacy
+
+nlp = spacy.load("es_core_news_sm")
 
 
 class NLPEngine:
@@ -79,6 +82,17 @@ class NLPEngine:
             return {"intent": final}
         elif model_type == ModelType.entities:
             return {"entities": final}
+
+
+def get_generic_entities(sentence):
+    result = []
+    doc = nlp(sentence)
+    entities = doc.ents
+    for ent in entities:
+        # print(ent.text, ent.label_)
+        result.append({"prediction": ent.text, "label": ent.text,
+                       "entity": ent.label_})
+    return result
 
 
 class AgentNotFoundException(Exception):

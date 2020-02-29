@@ -62,6 +62,9 @@ def get_entities():
             result["entities"] += \
                 engine.extract_information(data["sentence"], model.threshold, name=model.entity_name, k=k,
                                            model_type=ModelType.entities)["entities"]
+        generic_entities = get_generic_entities(data["sentence"])
+        if len(generic_entities) > 0:
+            result["entities"] += generic_entities
         # print(result)
         result["status"] = 200
         logger.info("<<<<< Output  %s", result)
