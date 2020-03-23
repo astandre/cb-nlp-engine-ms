@@ -90,8 +90,7 @@ def get_generic_entities(sentence):
     entities = doc.ents
     for ent in entities:
         # print(ent.text, ent.label_)
-        result.append({"prediction": ent.text, "label": ent.text,
-                       "entity": ent.label_})
+        result.append({"label": ent.text, "entity": ent.label_})
     return result
 
 
